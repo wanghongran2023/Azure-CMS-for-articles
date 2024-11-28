@@ -43,7 +43,6 @@ variable "storage_container_config" {
 variable "app_secret" {
   type = object({
     value            = string
-    description      = string
   })
 }
 

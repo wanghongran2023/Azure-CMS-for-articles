@@ -30,7 +30,6 @@ storage_container_config={
 
 app_secret={
     value            ="{tmp_app_secret_value}" 
-    description      ="{tmp_app_secret_description}"
 }
 
 app_config={
