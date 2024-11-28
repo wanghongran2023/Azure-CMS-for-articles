@@ -79,11 +79,11 @@ resource "azurerm_storage_container" "container" {
 }
 
 resource "azuread_application" "app_registration" {
-  name                        = var.app_config.name
+  display_name               = var.app_config.name
 }
 
 resource "azuread_application_password" "app_secret" {
-  application_id      = azurerm_azuread_application.app_registration.application_id
+  application_id      = azuread_application.app_registration.application_id
   value                      = var.app_secret.value
   end_date                   = "2025-12-31T23:59:59Z"
 }
