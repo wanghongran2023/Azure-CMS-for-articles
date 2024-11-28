@@ -78,14 +78,14 @@ resource "azurerm_storage_container" "container" {
   container_access_type = "container"
 }
 
-resource "azuread_azuread_application" "app_registration" {
+resource "azuread_application" "app_registration" {
   name                        = var.app_config.name
   display_name                = "Example App Registration"
   supported_account_types     = "All"
   reply_urls                  = ["http://localhost"]
 }
 
-resource "azuread_azuread_application_password" "app_secret" {
+resource "azuread_application_password" "app_secret" {
   application_object_id      = azurerm_azuread_application.app_registration.object_id
   description                = var.app_secret.description
   value                      = var.app_secret.value
