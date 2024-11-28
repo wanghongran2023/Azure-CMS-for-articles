@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  Deploy Infra:
+  DeployInfra:
     name: Deploy Infra by Using Terraform
     runs-on: ubuntu-latest
     steps:
