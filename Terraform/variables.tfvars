@@ -19,3 +19,12 @@ db_server_config={
 db_config={
     name             = "{tmp_db_name}"  
 }
+
+storage_account_config={
+    name             = "{tmp_storage_account_name}"
+}
+
+storage_container_config={
+    name             = "{tmp_storage_container_name}"
+}
+

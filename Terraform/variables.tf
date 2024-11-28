@@ -15,13 +15,26 @@ variable "resource_group_config" {
 }
 
 variable "db_server_config" {
-  type = object({                                                                                                           name             = string
+  type = object({
+    name             = string
     user             = string
     password         = string
   })
 }
 
 variable "db_config" {
+  type = object({
+    name             = string
+  })
+}
+
+variable "storage_account_config" {
+  type = object({
+    name             = string
+  })
+}
+
+variable "storage_container_config" {
   type = object({
     name             = string
   })

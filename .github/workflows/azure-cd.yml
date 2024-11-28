@@ -46,6 +46,8 @@ jobs:
 
            sed -i "s|{tmp_db_name}|${{ secrets.DB_NAME }}|g" variables.tfvars
 
+           sed -i "s|{tmp_storage_account_name}|${{ secrets.STORAGE_ACCOUNT }}|g" variables.tfvars
+           sed -i "s|{tmp_storage_container_name}|${{ secrets.STORAGE_CONTAINER }}|g" variables.tfvars
 
       - name: Start Terraform Deploy
         working-directory: Terraform
