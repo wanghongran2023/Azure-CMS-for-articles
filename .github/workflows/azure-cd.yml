@@ -20,7 +20,6 @@ jobs:
             terraform-cache-${{ runner.os }}-
 
       - name: Install Terraform
-        if: false
         run: |
           sudo apt update && sudo apt upgrade -y
           sudo apt install -y gnupg software-properties-common curl
@@ -31,7 +30,6 @@ jobs:
           terraform -v
      
       - name: Update Terraform Setup
-        if: false
         working-directory: Terraform 
         run: |
            sed -i "s|{tmp_subscription_id}|${{ secrets.SUBSCRIPTION_ID }}|g" variables.tfvars
@@ -50,20 +48,11 @@ jobs:
 
 
       - name: Start Terraform Deploy
-        if: false
         working-directory: Terraform
         run: |
           terraform init
           terraform plan -var-file=variables.tfvars
           terraform apply -auto-approve -var-file=variables.tfvars
-
-      - name: Set Up Python
-        if: false
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
-          cache: 'pip'
-          run: pip install -r requirements.txt
 
       - name: Set up ODBC Driver 18 for SQL Server
         run: |
