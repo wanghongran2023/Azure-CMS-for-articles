@@ -28,3 +28,11 @@ storage_container_config={
     name             = "{tmp_storage_container_name}"
 }
 
+app_secret={
+    value            ="{tmp_app_secret_value}" 
+    description      ="{tmp_app_secret_description}"
+}
+
+app_config={
+    name             ="{tmp_app_config_name}"
+}

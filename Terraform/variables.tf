@@ -39,3 +39,20 @@ variable "storage_container_config" {
     name             = string
   })
 }
+
+variable "app_secret" {
+  type = object({
+    value            = string
+    description      = string
+  })
+}
+
+variable "app_config" {
+  type = object({
+    name             = string
+  })
+}
+
+
+
+
