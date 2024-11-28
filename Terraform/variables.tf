@@ -40,12 +40,6 @@ variable "storage_container_config" {
   })
 }
 
-variable "app_secret" {
-  type = object({
-    value            = string
-  })
-}
-
 variable "app_config" {
   type = object({
     name             = string
