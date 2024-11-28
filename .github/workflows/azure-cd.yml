@@ -43,5 +43,5 @@ jobs:
         working-directory: Terraform
         run: |
           terraform init
-          terraform plan -var-file=cms-app.tfvars
-          terraform apply -var-file=cms-app.tfvars
+          terraform plan -var-file=variables.tfvars
+          terraform apply -var-file=variables.tfvars
