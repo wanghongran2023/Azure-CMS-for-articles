@@ -1,4 +1,4 @@
-name: Deploy Azure APP using Terraform
+name: Destroy Azure APP using Terraform
 
 on:
   workflow_dispatch:
@@ -28,18 +28,10 @@ jobs:
           sudo apt update
           sudo apt install -y terraform
           terraform -v
-     
-      - name: Update Terraform Setup
-        working-directory: Terraform 
-        run: |
-           sed -i "s|{tmp_subscription_id}|${{ secrets.SUBSCRIPTION_ID }}|g" variables.tfvars
-           sed -i "s|{tmp_tenant_id}|${{ secrets.TENANT_ID }}|g" variables.tfvars
-           sed -i "s|{tmp_sp_client_id}|${{ secrets.SP_CLIENT_ID }}|g" variables.tfvars
-           sed -i "s|{tmp_sp_client_secret}|${{ secrets.SP_CLIENT_SECRET }}|g" variables.tfvars
            
-      - name: Start Terraform Deploy
+      - name: Start Terraform Destroy
         working-directory: Terraform
         run: |
           terraform init
           terraform plan -var-file=variables.tfvars
-          terraform apply -auto-approve -var-file=variables.tfvars
+          terraform destroy -auto-approve -var-file=variables.tfvars
