@@ -30,4 +30,18 @@ jobs:
           sudo apt update
           sudo apt install -y terraform
           terraform -v
-          
+     
+      - name: Update Terraform Setup
+        working-directory: Terraform 
+        run: |
+           sed -i "s|{tmp_subscription_id}|${{ secrets.SUBSCRIPTION_ID }}|g" variables.tf
+           sed -i "s|{tmp_tenant_id}|${{ secrets.TENANT_ID }}|g" variables.tf
+           sed -i "s|{tmp_sp_client_id}|${{ secrets.SP_CLIENT_ID }}|g" variables.tf
+           sed -i "s|{tmp_sp_client_secret}|${{ secrets.SP_CLIENT_SECRET }}|g" variables.tf
+           
+      - name: Start Terraform Deploy
+        working-directory: Terraform
+        run: |
+          terraform init
+          terraform plan -var-file=cms-app.tfvars
+          terraform apply -var-file=cms-app.tfvars
