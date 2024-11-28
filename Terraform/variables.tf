@@ -1,13 +1,8 @@
 variable "provider_credentials" {
   type = object({
-    subscription_id  = {tmp_subscription_id}
-    tenant_id        = {tmp_tenant_id}
-    sp_client_id     = {tmp_sp_client_id}
-    sp_client_secret = {tmp_sp_client_secret}
+    subscription_id  = string
+    tenant_id        = string
+    sp_client_id     = string
+    sp_client_secret = string
   })
-}
-
-variable "location" {
-  type    = string
-  default = "us-east"
 }
