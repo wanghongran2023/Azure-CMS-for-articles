@@ -8,6 +8,12 @@ terraform {
 }
 
 provider "azurerm" {
+  tenant_id       = var.provider_credentials.tenant_id
+  client_id       = var.provider_credentials.sp_client_id
+  client_secret   = var.provider_credentials.sp_client_secret
+}
+
+provider "azuread" {
   subscription_id = var.provider_credentials.subscription_id
   tenant_id       = var.provider_credentials.tenant_id
   client_id       = var.provider_credentials.sp_client_id
@@ -72,14 +78,14 @@ resource "azurerm_storage_container" "container" {
   container_access_type = "container"
 }
 
-resource "azurerm_azuread_application" "app_registration" {
+resource "azuread_azuread_application" "app_registration" {
   name                        = var.app_config.name
   display_name                = "Example App Registration"
   supported_account_types     = "All"
   reply_urls                  = ["http://localhost"]
 }
 
-resource "azurerm_azuread_application_password" "app_secret" {
+resource "azuread_azuread_application_password" "app_secret" {
   application_object_id      = azurerm_azuread_application.app_registration.object_id
   description                = var.app_secret.description
   value                      = var.app_secret.value
