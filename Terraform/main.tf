@@ -7,13 +7,13 @@ terraform {
   }
 }
 
-provider "azurerm" {
+provider "azuread" {
   tenant_id       = var.provider_credentials.tenant_id
   client_id       = var.provider_credentials.sp_client_id
   client_secret   = var.provider_credentials.sp_client_secret
 }
 
-provider "azuread" {
+provider "azurerm" {
   subscription_id = var.provider_credentials.subscription_id
   tenant_id       = var.provider_credentials.tenant_id
   client_id       = var.provider_credentials.sp_client_id
