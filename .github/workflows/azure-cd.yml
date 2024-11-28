@@ -13,6 +13,14 @@ jobs:
       - name: Code Checkout
         uses: actions/checkout@v4
 
+      - name: Cache Terraform binary
+        uses: actions/cache@v3
+        with:
+          path: /usr/bin/terraform
+          key: terraform-cache-${{ runner.os }}-${{ hashFiles('**/terraform') }}
+          restore-keys: |
+            terraform-cache-${{ runner.os }}-
+
       - name: Install Terraform
         run: |
           sudo apt update && sudo apt upgrade -y
