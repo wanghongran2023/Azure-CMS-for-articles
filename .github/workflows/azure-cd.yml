@@ -20,6 +20,7 @@ jobs:
             terraform-cache-${{ runner.os }}-
 
       - name: Install Terraform
+        if: false
         run: |
           sudo apt update && sudo apt upgrade -y
           sudo apt install -y gnupg software-properties-common curl
@@ -30,6 +31,7 @@ jobs:
           terraform -v
      
       - name: Update Terraform Setup
+        if: false
         working-directory: Terraform 
         run: |
            sed -i "s|{tmp_subscription_id}|${{ secrets.SUBSCRIPTION_ID }}|g" variables.tfvars
@@ -48,6 +50,7 @@ jobs:
 
 
       - name: Start Terraform Deploy
+        if: false
         working-directory: Terraform
         run: |
           terraform init
@@ -64,6 +67,7 @@ jobs:
       - name: Create Table In Sql Server 
         working-directory: database
         run: |
+          pip install pyodbc
           sed -i "s|{tmp_db_server_name}|${{ secrets.DB_SERVER_NAME }}|g" createTable.py
           sed -i "s|{tmp_db_server_user}|${{ secrets.DB_SERVER_USER }}|g" createTable.py
           sed -i "s|{tmp_db_server_password}|${{ secrets.DB_SERVER_PASSWORD }}|g" createTable.py
@@ -73,6 +77,7 @@ jobs:
       - name: Check Table In Sql Server
         working-directory: database
         run: |
+          pip install pyodbc
           sed -i "s|{tmp_db_server_name}|${{ secrets.DB_SERVER_NAME }}|g" checkTabelCreation.py
           sed -i "s|{tmp_db_server_user}|${{ secrets.DB_SERVER_USER }}|g" checkTabelCreation.py
           sed -i "s|{tmp_db_server_password}|${{ secrets.DB_SERVER_PASSWORD }}|g" checkTabelCreation.py
