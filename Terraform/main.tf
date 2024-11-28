@@ -83,7 +83,7 @@ resource "azuread_application" "app_registration" {
 }
 
 resource "azuread_application_password" "app_secret" {
-  application_id      = azuread_application.app_registration.application_id
+  application_id      = azuread_application.app_registration.id
   value                      = var.app_secret.value
   end_date                   = "2025-12-31T23:59:59Z"
 }
