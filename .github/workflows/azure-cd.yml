@@ -59,7 +59,7 @@ jobs:
         with:
           python-version: '3.13'
           cache: 'pip'
-          run: pip install pyodbc
+          run: pip install -r requirements.txt
 
       - name: Create Table In Sql Server 
         working-directory: database
