@@ -3,10 +3,10 @@ import pyodbc
 # Connection setup
 conn = pyodbc.connect(
     "Driver={ODBC Driver 18 for SQL Server};"
-    "Server=cmswang.database.windows.net;"
-    "Database=cms;"
-    "Uid=cmsadmin;"
-    "Pwd=CMS4dmin;"
+    "Server={tmp_db_server_name}.database.windows.net;"
+    "Database={tmp_db_name};"
+    "Uid={tmp_db_server_user};"
+    "Pwd={tmp_db_server_password};"
     "Encrypt=yes;"
     "TrustServerCertificate=no;"
 )

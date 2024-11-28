@@ -6,3 +6,23 @@ variable "provider_credentials" {
     sp_client_secret = string
   })
 }
+
+variable "resource_group_config" {
+  type = object({
+    name             = string
+    location         = string
+  })
+}
+
+variable "db_server_config" {
+  type = object({                                                                                                           name             = string
+    user             = string
+    password         = string
+  })
+}
+
+variable "db_config" {
+  type = object({
+    name             = string
+  })
+}

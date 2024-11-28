@@ -36,10 +36,45 @@ jobs:
            sed -i "s|{tmp_tenant_id}|${{ secrets.TENANT_ID }}|g" variables.tfvars
            sed -i "s|{tmp_sp_client_id}|${{ secrets.SP_CLIENT_ID }}|g" variables.tfvars
            sed -i "s|{tmp_sp_client_secret}|${{ secrets.SP_CLIENT_SECRET }}|g" variables.tfvars
-           
+
+           sed -i "s|{tmp_resource_group_name}|${{ secrets.RESOURCE_GROUP_NAME }}|g" variables.tfvars
+           sed -i "s|{tmp_resource_group_location}|${{ secrets.RESOURCE_GROUP_LOCATION }}|g" variables.tfvars
+
+           sed -i "s|{tmp_db_server_name}|${{ secrets.DB_SERVER_NAME }}|g" variables.tfvars
+           sed -i "s|{tmp_db_server_user}|${{ secrets.DB_SERVER_USER }}|g" variables.tfvars
+           sed -i "s|{tmp_db_server_password}|${{ secrets.DB_SERVER_PASSWORD }}|g" variables.tfvars
+
+           sed -i "s|{tmp_db_name}|${{ secrets.DB_NAME }}|g" variables.tfvars
+
+
       - name: Start Terraform Deploy
         working-directory: Terraform
         run: |
           terraform init
           terraform plan -var-file=variables.tfvars
           terraform apply -auto-approve -var-file=variables.tfvars
+
+      - name: Set Up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+          run: pip install pyodbc
+
+      - name: Create Table In Sql Server 
+        working-directory: database
+        run: |
+          sed -i "s|{tmp_db_server_name}|${{ secrets.DB_SERVER_NAME }}|g" createTable.py
+          sed -i "s|{tmp_db_server_user}|${{ secrets.DB_SERVER_USER }}|g" createTable.py
+          sed -i "s|{tmp_db_server_password}|${{ secrets.DB_SERVER_PASSWORD }}|g" createTable.py
+          sed -i "s|{tmp_db_name}|${{ secrets.DB_NAME }}|g" createTable.py
+          python createTable.py
+
+      - name: Check Table In Sql Server
+        working-directory: database
+        run: |
+          sed -i "s|{tmp_db_server_name}|${{ secrets.DB_SERVER_NAME }}|g" checkTabelCreation.py
+          sed -i "s|{tmp_db_server_user}|${{ secrets.DB_SERVER_USER }}|g" checkTabelCreation.py
+          sed -i "s|{tmp_db_server_password}|${{ secrets.DB_SERVER_PASSWORD }}|g" checkTabelCreation.py
+          sed -i "s|{tmp_db_name}|${{ secrets.DB_NAME }}|g" checkTabelCreation.py
+          python checkTabelCreation.py 
