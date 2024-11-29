@@ -88,7 +88,6 @@ resource "azurerm_app_service_plan" "app_service_plan" {
   name                = "python-app-service-plan"
   location            = azurerm_resource_group.cms.location
   resource_group_name = azurerm_resource_group.cms.name
-  os_type             = "Linux"
   sku {
     tier = "PremiumV3"
     size = "P0v3"
@@ -100,10 +99,6 @@ resource "azurerm_linux_web_app" "linux_webapp" {
   location            = azurerm_resource_group.cms.location
   resource_group_name = azurerm_resource_group.cms.name
   service_plan_id     = azurerm_app_service_plan.app_service_plan.id
-
-  site_config {
-    linux_fx_version = "PYTHON|3.9"
-  }
 
   auth_settings {
     enabled = false
