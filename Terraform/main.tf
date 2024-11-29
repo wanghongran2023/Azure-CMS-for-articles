@@ -94,28 +94,22 @@ resource "azurerm_app_service_plan" "app_service_plan" {
   }
 }
 
-resource "azurerm_linux_web_app" "webapp" {
-  name                  = var.app_config.name
-  location              = azurerm_resource_group.cms.location
-  resource_group_name   = azurerm_resource_group.cms.name
-  service_plan_id       = azurerm_app_service_plan.app_service_plan.id
-  https_only            = true
-  site_config { 
-    minimum_tls_version = "1.2"
-  }
-  app_settings = {
-    "WEBSITE_STACK"         = "python"
-    "PYTHON_VERSION"        = "3.9"
-    "SCM_DO_BUILD_DURING_DEPLOYMENT" = "true"
-  }
-}
+resource "azurerm_linux_web_app" "linux_webapp" {
+  name                = var.app_config.name
+  location            = azurerm_resource_group.cms.location
+  resource_group_name = azurerm_resource_group.cms.name
+  service_plan_id     = azurerm_app_service_plan.app_service_plan.id
+  public_network_access_enabled = true
 
-resource "azurerm_app_service_source_control" "sourcecontrol" {
-  app_id             = azurerm_linux_web_app.webapp.id
-  repo_url           = "https://github.com/wanghongran2023/Azure-CMS-for-articles.git"
-  branch             = "main"
-  use_manual_integration = false
-  use_mercurial      = false
+  site_config {
+    application_stack {
+      python_version = "3.9"
+    }
+  }
+
+  auth_settings {
+    enabled = false
+  }
 }
 
 
