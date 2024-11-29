@@ -117,9 +117,20 @@ jobs:
 
       - name: Deploy App to Azure
         run: |
+
+          az webapp config appsettings set \
+          --name ${{ secrets.APP_NAME }} \
+          --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+          --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true
+
+          az webapp config set \
+          --name ${{ secrets.APP_NAME }} \
+          --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+          --startup-file "python application.py"
+
           az webapp deployment source config \
           --name ${{ secrets.APP_NAME }} \
           --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
           --repo-url https://github.com/wanghongran2023/Azure-CMS-for-articles \
           --branch main \
-          --manual-integration
+          --manual-integration false
