@@ -143,6 +143,7 @@ jobs:
 
   DeployApp:
     runs-on: ubuntu-latest
+    if: false 
     needs: InitDatabase
     permissions:
       id-token: write
