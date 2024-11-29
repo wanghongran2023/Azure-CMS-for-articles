@@ -107,7 +107,7 @@ jobs:
 
   InitDatabase:
     name: Create Table and Add Data to Database
-    need: DeployInfraAndBuild
+    needs: DeployInfraAndBuild
     runs-on: ubuntu-latest                     
     steps:
       - name: Code Checkout
