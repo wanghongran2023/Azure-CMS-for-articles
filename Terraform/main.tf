@@ -88,8 +88,8 @@ resource "azurerm_app_service_plan" "app_service_plan" {
   location            = azurerm_resource_group.cms.location
   resource_group_name = azurerm_resource_group.cms.name
   sku {
-    tier = "Free"
-    size = "F1"
+    tier = "Basic"
+    size = "B1"
   }
 }
 
