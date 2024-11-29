@@ -74,7 +74,6 @@ jobs:
         run: |
           pip install pyodbc
           sed -i "s|{tmp_db_server_name}|${{ secrets.DB_SERVER_NAME }}|g" createTable.py
-          A
           sed -i "s|{tmp_db_server_user}|${{ secrets.DB_SERVER_USER }}|g" createTable.py
           sed -i "s|{tmp_db_server_password}|${{ secrets.DB_SERVER_PASSWORD }}|g" createTable.py
           sed -i "s|{tmp_db_name}|${{ secrets.DB_NAME }}|g" createTable.py
@@ -119,7 +118,7 @@ jobs:
       - name: Deploy App to Azure
         run: |
           az webapp deployment source config \
-          --name python-web-app \
+          --name ${{ secrets.APP_NAME }} \
           --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
           --repo-url https://github.com/wanghongran2023/Azure-CMS-for-articles \
           --branch main \
