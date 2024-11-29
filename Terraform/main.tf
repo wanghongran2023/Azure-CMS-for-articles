@@ -102,7 +102,7 @@ resource "azurerm_linux_web_app" "app_service" {
 
   site_config {
     application_stack {
-      python_version = "3.12"
+      python_version = "3.9"
     }
   }
 
