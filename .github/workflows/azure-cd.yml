@@ -95,7 +95,10 @@ jobs:
           sed -i "s|{tmp_db_server_password}|${{ secrets.DB_SERVER_PASSWORD }}|g" config.py
           sed -i "s|{tmp_db_name}|${{ secrets.DB_NAME }}|g" config.py
 
-          echo "STORAGE_KEY=$(terraform output -raw storage_key)" >> $GITHUB_ENV
+          cd Terraform
+          echo "STORAGE_KEY=$(terraform output -raw storage_key)" >> ../env_vars.sh
+          cd ..
+          source env_vars.sh
           sed -i "s|{tmp_storage_account_name}|${{ secrets.STORAGE_ACCOUNT }}|g" config.py
           sed -i "s|{tmp_storage_container_name}|${{ secrets.STORAGE_CONTAINER }}|g" config.py
           sed -i "s|{tmp_storage_key}|$STORAGE_KEY|g" config.py
