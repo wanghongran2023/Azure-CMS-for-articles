@@ -170,4 +170,3 @@ jobs:
           app-name: ${{ secrets.APP_NAME }}
           resource-group: ${{ secrets.RESOURCE_GROUP_NAME }}
           slot-name: 'Production'
-          startup-command: './start.sh'

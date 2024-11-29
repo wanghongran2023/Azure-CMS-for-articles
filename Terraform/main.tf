@@ -107,7 +107,8 @@ resource "azurerm_linux_web_app" "app_service" {
   app_settings = {
     "WEBSITE_STACK"         = "python"
     "PYTHON_VERSION"        = "3.9"
-    #"WEBSITE_RUN_FROM_PACKAGE" = "1"
+    "WEBSITE_RUN_FROM_PACKAGE" = "1"
+    "WEBSITE_STARTUP_FILE"  = "./start.sh"
     "SCM_DO_BUILD_DURING_DEPLOYMENT" = "true"
   }
 
