@@ -55,7 +55,10 @@ jobs:
           terraform init
           terraform plan -var-file=variables.tfvars
           terraform apply -auto-approve -var-file=variables.tfvars
-             
+          echo "STORAGE_KEY=$(terraform output -raw storage_key)" >> env_vars.sh
+          source env_vars.sh
+          sed -i "s|{tmp_storage_key}|$STORAGE_KEY|g" ../config.py
+
       - name: Update Parameter in APP Config
         run: |
           sed -i "s|{tmp_client_secret_key}|${{ secrets.SP_CLIENT_SECRET_KEY }}|g" config.py
@@ -64,42 +67,12 @@ jobs:
           sed -i "s|{tmp_db_server_password}|${{ secrets.DB_SERVER_PASSWORD }}|g" config.py
           sed -i "s|{tmp_db_name}|${{ secrets.DB_NAME }}|g" config.py
 
-          cd Terraform
-          echo "STORAGE_KEY=$(terraform output -raw storage_key)" >> ../env_vars.sh
-          cd ..
-          source env_vars.sh
           sed -i "s|{tmp_storage_account_name}|${{ secrets.STORAGE_ACCOUNT }}|g" config.py
           sed -i "s|{tmp_storage_container_name}|${{ secrets.STORAGE_CONTAINER }}|g" config.py
-          sed -i "s|{tmp_storage_key}|$STORAGE_KEY|g" config.py
 
           sed -i "s|{tmp_sp_client_id}|${{ secrets.SP_CLIENT_ID }}|g" config.py
           sed -i "s|{tmp_sp_client_secret}|${{ secrets.SP_CLIENT_SECRET }}|g" config.py
           cat config.py
-
-      - name: Set up Python version
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.9'
-
-      - name: Create and start virtual environment
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          client-id: ${{ secrets.SP_CLIENT_ID }}
-          tenant-id: ${{ secrets.TENANT_ID }}
-          subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
-
-      - name: 'Deploy to Azure Web App'
-        run: |
-          az webapp up --runtime PYTHON:3.9 --sku B1 --logs --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} 
-
 
   InitDatabase:
     name: Create Table and Add Data to Database
@@ -139,7 +112,6 @@ jobs:
 
   DeployApp:
     runs-on: ubuntu-latest
-    if: false 
     needs: InitDatabase
     permissions:
       id-token: write

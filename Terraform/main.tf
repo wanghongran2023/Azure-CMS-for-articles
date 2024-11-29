@@ -84,32 +84,32 @@ output "storage_key" {
   sensitive = true
 }
 
-#resource "azurerm_app_service_plan" "app_service_plan" {
-#  name                = "python-app-service-plan"
-#  location            = azurerm_resource_group.cms.location
-#  resource_group_name = azurerm_resource_group.cms.name
-#  sku {
-#    tier = "PremiumV3"
-#    size = "P0v3"
-#  }
-#}
+resource "azurerm_app_service_plan" "app_service_plan" {
+  name                = "python-app-service-plan"
+  location            = azurerm_resource_group.cms.location
+  resource_group_name = azurerm_resource_group.cms.name
+  sku {
+    tier = "PremiumV3"
+    size = "P0v3"
+  }
+}
 
-#resource "azurerm_linux_web_app" "linux_webapp" {
-#  name                = var.app_config.name
-#  location            = azurerm_resource_group.cms.location
-#  resource_group_name = azurerm_resource_group.cms.name
-#  service_plan_id     = azurerm_app_service_plan.app_service_plan.id
-#
-#  auth_settings {
-#    enabled = false
-#  }
-#  
-#  site_config {
-#    application_stack {
-#      python_version = "3.9"
-#    }
-#  }
-#}
+resource "azurerm_linux_web_app" "linux_webapp" {
+  name                = var.app_config.name
+  location            = azurerm_resource_group.cms.location
+  resource_group_name = azurerm_resource_group.cms.name
+  service_plan_id     = azurerm_app_service_plan.app_service_plan.id
+
+  auth_settings {
+    enabled = false
+  }
+  
+  site_config {
+    application_stack {
+      python_version = "3.9"
+    }
+  }
+}
 
 
 # resource "azuread_application" "app_registration" {
