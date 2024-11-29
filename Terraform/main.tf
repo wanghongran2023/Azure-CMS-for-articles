@@ -108,6 +108,7 @@ resource "azurerm_linux_web_app" "app_service" {
     "WEBSITE_STACK"         = "python"
     "PYTHON_VERSION"        = "3.9"
     #"WEBSITE_RUN_FROM_PACKAGE" = "1"
+    "SCM_DO_BUILD_DURING_DEPLOYMENT" = "true"
   }
 
 }
