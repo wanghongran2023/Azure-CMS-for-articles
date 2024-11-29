@@ -52,7 +52,7 @@ jobs:
       - name: Start Terraform Deploy
         working-directory: Terraform
         run: |
-          terraform init -upgrade
+          terraform init
           terraform plan -var-file=variables.tfvars
           terraform apply -auto-approve -var-file=variables.tfvars
              
