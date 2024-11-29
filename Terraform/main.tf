@@ -7,11 +7,11 @@ terraform {
   }
 }
 
-provider "azuread" {
-  tenant_id       = var.provider_credentials.tenant_id
-  client_id       = var.provider_credentials.sp_client_id
-  client_secret   = var.provider_credentials.sp_client_secret
-}
+# provider "azuread" {
+#  tenant_id       = var.provider_credentials.tenant_id
+#  client_id       = var.provider_credentials.sp_client_id
+#  client_secret   = var.provider_credentials.sp_client_secret
+# }
 
 provider "azurerm" {
   subscription_id = var.provider_credentials.subscription_id
@@ -78,13 +78,18 @@ resource "azurerm_storage_container" "container" {
   container_access_type = "container"
 }
 
-resource "azuread_application" "app_registration" {
-  display_name               = var.app_config.name
+output "storage_key" {
+  value = azurerm_storage_account.images_storage_account.primary_access_key
+  sensitive = true
 }
 
-resource "azuread_application_password" "app_secret" {
-  application_id      = azuread_application.app_registration.id
-  end_date                   = "2025-12-31T23:59:59Z"
-}
+# resource "azuread_application" "app_registration" {
+#  display_name               = var.app_config.name
+# }
+
+# resource "azuread_application_password" "app_secret" {
+#  application_id      = azuread_application.app_registration.id
+#  end_date                   = "2025-12-31T23:59:59Z"
+# }
 
 

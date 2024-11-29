@@ -49,7 +49,6 @@ jobs:
            sed -i "s|{tmp_storage_account_name}|${{ secrets.STORAGE_ACCOUNT }}|g" variables.tfvars
            sed -i "s|{tmp_storage_container_name}|${{ secrets.STORAGE_CONTAINER }}|g" variables.tfvars
 
-           sed -i "s|{tmp_app_secret_value}|${{ secrets.APP_SECRET_VALUE }}|g" variables.tfvars
            sed -i "s|{tmp_app_config_name}|${{ secrets.APP_NAME }}|g" variables.tfvars
 
       - name: Start Terraform Deploy
@@ -85,4 +84,22 @@ jobs:
           sed -i "s|{tmp_db_server_user}|${{ secrets.DB_SERVER_USER }}|g" checkTabelCreation.py
           sed -i "s|{tmp_db_server_password}|${{ secrets.DB_SERVER_PASSWORD }}|g" checkTabelCreation.py
           sed -i "s|{tmp_db_name}|${{ secrets.DB_NAME }}|g" checkTabelCreation.py
-          python checkTabelCreation.py 
+          python checkTabelCreation.py
+
+      - name: Update Parameter in APP Config
+        run: |
+          sed -i "s|{tmp_client_secret_key}|${{ secrets.SP_CLIENT_SECRET_KEY }}|g" config.py
+
+          sed -i "s|{tmp_db_server_name}|${{ secrets.DB_SERVER_NAME }}|g" config.py
+          sed -i "s|{tmp_db_server_user}|${{ secrets.DB_SERVER_USER }}|g" config.py
+          sed -i "s|{tmp_db_server_password}|${{ secrets.DB_SERVER_PASSWORD }}|g" config.py
+          sed -i "s|{tmp_db_name}|${{ secrets.DB_NAME }}|g" config.py
+
+          echo "STORAGE_KEY=$(terraform output -raw storage_key)" >> $GITHUB_ENV
+          sed -i "s|{tmp_storage_account_name}|${{ secrets.STORAGE_ACCOUNT }}|g" config.py
+          sed -i "s|{tmp_storage_container_name}|${{ secrets.STORAGE_CONTAINER }}|g" config.py
+          sed -i "s|{tmp_storage_key}|$STORAGE_KEY|g" config.py
+
+          sed -i "s|{tmp_sp_client_id}|${{ secrets.SP_CLIENT_ID }}|g" config.py
+          sed -i "s|{tmp_sp_client_secret}|${{ secrets.SP_CLIENT_SECRET }}|g" config.py
+          cat config.py
