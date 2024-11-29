@@ -7,6 +7,12 @@ variable "provider_credentials" {
   })
 }
 
+variable "github_credentials" {
+  type = object({
+    github_token  = string
+  })
+}
+
 variable "resource_group_config" {
   type = object({
     name             = string

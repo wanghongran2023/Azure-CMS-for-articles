@@ -51,6 +51,9 @@ jobs:
 
            sed -i "s|{tmp_app_config_name}|${{ secrets.APP_NAME }}|g" variables.tfvars
 
+           sed -i "s|{tmp_github_token}|${{ secrets.MY_GITHUB_TOKEN }}|g" variables.tfvars
+
+
       - name: Start Terraform Deploy
         working-directory: Terraform
         run: |

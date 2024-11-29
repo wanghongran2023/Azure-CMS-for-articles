@@ -31,3 +31,7 @@ storage_container_config={
 app_config={
     name             ="{tmp_app_config_name}"
 }
+
+github_credentials={
+    github_token     ="{tmp_github_token}"
+}

@@ -83,6 +83,44 @@ output "storage_key" {
   sensitive = true
 }
 
+resource "azurerm_app_service_plan" "app_service_plan" {
+  name                = "python-app-service-plan"
+  location            = azurerm_resource_group.cms.location
+  resource_group_name = azurerm_resource_group.cms.name
+  sku {
+    tier = "Free"
+    size = "F1"
+  }
+}
+
+# App Service
+resource "azurerm_linux_web_app" "app_service" {
+  name                = "python-web-app"
+  location            = azurerm_resource_group.cms.location
+  resource_group_name = azurerm_resource_group.cms.name
+  service_plan_id     = azurerm_app_service_plan.app_service_plan.id
+
+  site_config {
+    linux_fx_version = "PYTHON|3.12"
+  }
+
+  app_settings = {
+    "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
+  }
+}
+
+# GitHub Deployment
+resource "azurerm_source_control" "github" {
+  app_id               = azurerm_linux_web_app.app_service.id
+  repo_url             = "https://github.com/wanghongran2023/Azure-CMS-for-articles"
+  branch               = "main"
+  use_mercurial        = false
+
+  personal_access_token = var.github_credentials.github_token
+}
+
+
+
 # resource "azuread_application" "app_registration" {
 #  display_name               = var.app_config.name
 # }
