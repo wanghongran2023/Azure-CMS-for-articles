@@ -74,6 +74,7 @@ jobs:
         run: |
           pip install pyodbc
           sed -i "s|{tmp_db_server_name}|${{ secrets.DB_SERVER_NAME }}|g" createTable.py
+          A
           sed -i "s|{tmp_db_server_user}|${{ secrets.DB_SERVER_USER }}|g" createTable.py
           sed -i "s|{tmp_db_server_password}|${{ secrets.DB_SERVER_PASSWORD }}|g" createTable.py
           sed -i "s|{tmp_db_name}|${{ secrets.DB_NAME }}|g" createTable.py
@@ -109,3 +110,17 @@ jobs:
           sed -i "s|{tmp_sp_client_id}|${{ secrets.SP_CLIENT_ID }}|g" config.py
           sed -i "s|{tmp_sp_client_secret}|${{ secrets.SP_CLIENT_SECRET }}|g" config.py
           cat config.py
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy App to Azure
+        run: |
+          az webapp deployment source config \
+          --name python-web-app \
+          --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+          --repo-url https://github.com/wanghongran2023/Azure-CMS-for-articles \
+          --branch main \
+          --manual-integration

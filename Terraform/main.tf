@@ -110,14 +110,6 @@ resource "azurerm_linux_web_app" "app_service" {
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
   }
 
-  source_control {
-    repo_url = "https://github.com/wanghongran2023/Azure-CMS-for-articles"
-    branch   = "main"
-    oauth_token {
-      secret_name = "GITHUB_TOKEN"
-      secret_key  = var.github_credentials.github_token
-    }
-  }
 }
 
 
