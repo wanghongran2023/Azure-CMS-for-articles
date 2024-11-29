@@ -101,9 +101,7 @@ resource "azurerm_linux_web_app" "linux_webapp" {
   service_plan_id     = azurerm_app_service_plan.app_service_plan.id
 
   site_config {
-    application_stack {
-      python_version = "3.9"
-    }
+    linux_fx_version = "PYTHON|3.9"
   }
 
   auth_settings {
