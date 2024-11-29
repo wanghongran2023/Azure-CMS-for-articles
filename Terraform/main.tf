@@ -101,13 +101,13 @@ resource "azurerm_linux_web_app" "app_service" {
   service_plan_id     = azurerm_app_service_plan.app_service_plan.id
 
   site_config {
-    app_settings = {
-      "WEBSITE_RUN_FROM_PACKAGE" = "1"
-    }
+    always_on = true
   }
 
   app_settings = {
-    "WEBSITE_STACK" = "python"
+    "WEBSITE_STACK"         = "python"
+    "PYTHON_VERSION"        = "3.9"
+    "WEBSITE_RUN_FROM_PACKAGE" = "1"
   }
 
 }
