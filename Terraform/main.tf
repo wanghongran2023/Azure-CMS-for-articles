@@ -101,23 +101,25 @@ resource "azurerm_linux_web_app" "app_service" {
   service_plan_id     = azurerm_app_service_plan.app_service_plan.id
 
   site_config {
-    linux_fx_version = "PYTHON|3.12"
+    application_stack {
+      python_version = "3.12"
+    }
   }
 
   app_settings = {
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
   }
+
+  source_control {
+    repo_url = "https://github.com/wanghongran2023/Azure-CMS-for-articles"
+    branch   = "main"
+    oauth_token {
+      secret_name = "GITHUB_TOKEN"
+      secret_key  = var.github_credentials.github_token
+    }
+  }
 }
 
-# GitHub Deployment
-resource "azurerm_source_control" "github" {
-  app_id               = azurerm_linux_web_app.app_service.id
-  repo_url             = "https://github.com/wanghongran2023/Azure-CMS-for-articles"
-  branch               = "main"
-  use_mercurial        = false
-
-  personal_access_token = var.github_credentials.github_token
-}
 
 
 
