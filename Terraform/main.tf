@@ -84,7 +84,7 @@ output "storage_key" {
   sensitive = true
 }
 
-resource "azurerm_app_service_plan" "app_service_plan" {
+resource "azurerm_service_plan" "app_service_plan" {
   name                = "python-app-service-plan"
   location            = azurerm_resource_group.cms.location
   resource_group_name = azurerm_resource_group.cms.name
@@ -107,11 +107,6 @@ resource "azurerm_linux_web_app" "linux_webapp" {
   }
   
   site_config {
-    app_settings {
-      name  = "WEBSITE_STACK"
-      value = "PYTHON"
-    }
-
     always_on        = true
   }
 
