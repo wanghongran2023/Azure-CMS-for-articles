@@ -112,7 +112,6 @@ resource "azurerm_linux_web_app" "linux_webapp" {
   }
 
   app_settings = { 
-    "WEBSITE_RUN_FROM_PACKAGE" = "1"
   }
 }
 
