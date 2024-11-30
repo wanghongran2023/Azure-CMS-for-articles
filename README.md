@@ -6,6 +6,9 @@ This project is a Python web application built using Flask. The user can log in 
 
 In this project, we will use github action flow and Terraform to build the infratructure and deploy the applicatiuon automatically, to use the workflow, you should set up all the secret below:
 
+  - The app registration should have the Contributor role, and GitHub federated access should be set up for the repository repo:wanghongran2023/Azure-CMS-for-articles:environment:Production. 
+  - After running the Infrastructure construction workflow, you will get the storage account access key, which should be set as the STORAGE_KEY secret.
+
 | Secret Name | Content |
 |----------|----------|
 | 1. TENANT_ID 			| Microsoft Entra ID -> Tenant ID |
@@ -23,10 +26,6 @@ In this project, we will use github action flow and Terraform to build the infra
 | 13. STORAGE_ACCOUNT		| Name for Storage Account |
 | 14. STORAGE_KEY		| Access key for Storage Account |
 | 15. APP_NAME			| Name for App service |
-
-The app registration should have the Contributor role, and GitHub federated access should be set up for the repository repo:wanghongran2023/Azure-CMS-for-articles:environment:Production. 
-After running the Infrastructure construction workflow, you will get the storage account access key, which should be set as the STORAGE_KEY secret.
-
 
 ## Project Instructions (For Student)
 
