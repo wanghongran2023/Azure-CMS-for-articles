@@ -104,10 +104,16 @@ resource "azurerm_linux_web_app" "linux_webapp" {
   
   site_config {
     always_on        = true
+    linux_fx_version = "PYTHON|3.9"
+    startup_command = "/home/site/wwwroot/startup.sh"
   }
 
   app_settings = { 
-    "PYTHON_VERSION" = "3.9"
+    "WEBSITE_PYTHON_VERSION" = "3.9"
+  }
+
+  application_stack {
+    python_version = "3.9"
   }
 }
 
