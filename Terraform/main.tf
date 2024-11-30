@@ -107,7 +107,10 @@ resource "azurerm_linux_web_app" "linux_webapp" {
   }
   
   site_config {
-    linux_fx_version = "PYTHON|3.9"
+    app_settings = {
+      "WEBSITE_STACK"     = "PYTHON"
+      "WEBSITE_STACK_VERSION" = "3.9"
+    }
     always_on        = true
   }
 }
