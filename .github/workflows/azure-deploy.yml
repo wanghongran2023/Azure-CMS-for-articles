@@ -52,7 +52,8 @@ jobs:
           terraform init
           terraform plan -var-file=variables.tfvars
           terraform apply -auto-approve -var-file=variables.tfvars
-          echo "STORAGE_KEY=$(terraform output -raw storage_key)" >> env_vars.sh
+          STORAGE_KEY=$(terraform output -raw storage_key)
+          echo "STORAGE_KEY=$STORAGE_KEY" > env_vars.sh
           source env_vars.sh
           sed -i "s|{tmp_storage_key}|$STORAGE_KEY|g" ../config.py
 
