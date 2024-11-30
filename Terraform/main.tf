@@ -104,7 +104,7 @@ resource "azurerm_linux_web_app" "linux_webapp" {
   
   site_config {
     always_on        = true
-    app_command_line = "pip install -r requirements.txt && gunicorn --preload --bind=0.0.0.0 --workers=4 --timeout 600 app:app"
+    app_command_line = "apt-get update && apt-get install -y build-essential g++ && pip install -r requirements.txt && python application.py"
 
     application_stack {
       python_version = "3.9"
