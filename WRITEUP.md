@@ -21,8 +21,3 @@ Since the application is simple with a small workload and does not have strict r
 
 However, if the system has compliance or security requirements that necessitate further control over the infrastructure, such as installing specific host-level security tools, then VMs would be a better choice.
 Also, if we are woking with lagacy system, then Vms will also be better
-
----
-
-## 6. Conclusion
-While **Azure App Service** is the best solution for most CMS deployment scenarios due to its scalability, cost-effectiveness, and ease of use, we would reconsider the choice if the application’s needs evolve significantly, requiring higher levels of customization, control, or specific networking configurations. In such cases, a **Virtual Machine** may be more suitable for handling those demands.
