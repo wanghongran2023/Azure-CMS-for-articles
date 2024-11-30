@@ -105,11 +105,11 @@ resource "azurerm_linux_web_app" "linux_webapp" {
   site_config {
     always_on        = true
     linux_fx_version = "PYTHON|3.9"
-    startup_script = "/home/site/wwwroot/startup.sh"
   }
 
   app_settings = { 
     "WEBSITE_PYTHON_VERSION" = "3.9"
+    "WEBSITE_RUN_FROM_PACKAGE" = "1"
   }
 }
 
