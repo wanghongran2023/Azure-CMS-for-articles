@@ -88,7 +88,6 @@ resource "azurerm_app_service_plan" "app_service_plan" {
   name                = "python-app-service-plan"
   location            = azurerm_resource_group.cms.location
   resource_group_name = azurerm_resource_group.cms.name
-  os_type             = "Linux"
   reserved            = true
   sku {
     tier = "PremiumV3"
