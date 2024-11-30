@@ -19,7 +19,7 @@ imageSourceUrl = 'https://'+ app.config['BLOB_ACCOUNT']  + '.blob.core.windows.n
 @app.route('/home')
 @login_required
 def home():
-    app.logger.warning('Start Query Post.')
+    app.logger.info('Start Query Post.')
     user = User.query.filter_by(username=current_user.username).first_or_404()
     posts = Post.query.all()
     return render_template(
@@ -32,10 +32,11 @@ def home():
 @login_required
 def new_post():
     form = PostForm(request.form)
-    app.logger.warning('Start Create Post.')
+    app.logger.info('Start Create Post.')
     if form.validate_on_submit():
         post = Post()
         post.save_changes(form, request.files['image_path'], current_user.id, new=True)
+        app.logger.info('Create Post Successfully.')
         return redirect(url_for('home'))
     return render_template(
         'post.html',
@@ -84,21 +85,24 @@ def authorized():
     if request.args.get('state') != session.get("state"):
         return redirect(url_for("home"))  # No-OP. Goes back to Index page
     if "error" in request.args:  # Authentication/Authorization failure
+        app.logger.warning('Error Authentication.')
         return render_template("auth_error.html", result=request.args)
     if request.args.get('code'):
         cache = _load_cache()
-        app.logger.error(cache)
+        
         result = _build_msal_app(cache=cache).acquire_token_by_authorization_code(
             request.args['code'],
             scopes=Config.SCOPE,
             redirect_uri=url_for('authorized',_external=True,_scheme='https')
         )
         if "error" in result:
+            app.logger.warning('Error Authentication.')
             return render_template("auth_error.html", result=result)
         session["user"] = result.get("id_token_claims")
         # Note: In a real app, we'd use the 'name' property from session["user"] below
         # Here, we'll use the admin username for anyone who is authenticated by MS
         user = User.query.filter_by(username="admin").first()
+        app.logger.info('User '+user+' login successfully')
         login_user(user)
         _save_cache(cache)
     return redirect(url_for('home'))
