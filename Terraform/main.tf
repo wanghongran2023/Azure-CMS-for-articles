@@ -107,9 +107,14 @@ resource "azurerm_linux_web_app" "linux_webapp" {
   }
   
   site_config {
-    app_settings = {
-      "WEBSITE_STACK"     = "PYTHON"
-      "WEBSITE_STACK_VERSION" = "3.9"
+    app_settings {
+      name  = "WEBSITE_STACK"
+      value = "PYTHON"
+    }
+
+    app_settings {
+      name  = "WEBSITE_STACK_VERSION"
+      value = "3.9"
     }
     always_on        = true
   }
