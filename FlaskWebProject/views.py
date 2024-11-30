@@ -86,7 +86,7 @@ def authorized():
     if request.args.get('code'):
         cache = _load_cache()
         app.logger.error(cache)
-        result = _build_msal_app(cache=cache).aquire_token_by_authorization_code(
+        result = _build_msal_app(cache=cache).acquire_token_by_authorization_code(
             request.args['code'],
             scopes=Config.SCOPE,
             redirect_uri=url_for('authorized',_external=True,_scheme='https')
@@ -123,6 +123,8 @@ def _load_cache():
 def _save_cache(cache):
     if cache.has_state_changed:
         session['token_cache'] = cache.serialize()
+    else:
+        session['token_cache'] = session.get('token_cache', cache.serialize())
 
 def _build_msal_app(cache=None, authority=None):
     app=msal.ConfidentialClientApplication(Config.CLIENT_ID,authority=authority or Config.AUTHORITY,
