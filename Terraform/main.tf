@@ -90,7 +90,6 @@ resource "azurerm_service_plan" "app_service_plan" {
   resource_group_name = azurerm_resource_group.cms.name
   reserved            = true
   sku_name            = "P0v3"
-  sku_tier            = "PremiumV3"
   os_type             = "Linux"
 }
 
