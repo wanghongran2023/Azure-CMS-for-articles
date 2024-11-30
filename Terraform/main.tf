@@ -107,8 +107,7 @@ resource "azurerm_linux_web_app" "linux_webapp" {
   }
 
   app_settings = { 
-    "WEBSITE_STACK"         = "PYTHON"
-    "WEBSITE_STACK_VERSION" = "3.9"
+    "PYTHON_VERSION" = "3.9"
   }
 }
 
