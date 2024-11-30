@@ -89,18 +89,16 @@ resource "azurerm_service_plan" "app_service_plan" {
   location            = azurerm_resource_group.cms.location
   resource_group_name = azurerm_resource_group.cms.name
   reserved            = true
-  sku {
-    tier = "PremiumV3"
-    size = "P0v3"
-    capacity = 1
-  }
+  sku_name            = "P0v3"
+  sku_tier            = "PremiumV3"
+  os_type             = "Linux"
 }
 
 resource "azurerm_linux_web_app" "linux_webapp" {
   name                = var.app_config.name
   location            = azurerm_resource_group.cms.location
   resource_group_name = azurerm_resource_group.cms.name
-  service_plan_id     = azurerm_app_service_plan.app_service_plan.id
+  service_plan_id     = azurerm_service_plan.app_service_plan.id
 
   auth_settings {
     enabled = false
